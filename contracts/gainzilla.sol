@@ -49,7 +49,7 @@ contract MemeCoin is ERC20, Ownable {
         uint16 sellEco;
     }
     TaxRates public taxRates;
-    uint256 private transferMultiplier = 35;
+    uint256 private constant TRANSFER_MULTIPLIER = 35; // Made constant
 
     uint256 public swapThreshold = TOTAL_SUPPLY / 1000;
     uint256 public accumulatedLp;
@@ -81,14 +81,16 @@ contract MemeCoin is ERC20, Ownable {
     event RouterUpdated(address newRouter);
     event TaxesCollected(uint256 lpAmount, uint256 ecoAmount);
     event LiquidityAdded(uint256 tokenAmount, uint256 ethAmount);
+    event MaxWalletUpdated(uint256 newPercentage);
 
-    constructor() ERC20("Meme Coin", "MEME") Ownable() {
+    constructor() ERC20("Meme Coin", "MEME") {
+        _transferOwnership(msg.sender);
         _mint(msg.sender, TOTAL_SUPPLY);
         routerAddress = DEFAULT_ROUTER;
         _setupPair();
         
         taxRates = TaxRates(0, 0, 0, 0);
-    
+        
         isExempt[msg.sender] = true;
         isExempt[address(this)] = true;
     }
@@ -103,11 +105,13 @@ contract MemeCoin is ERC20, Ownable {
         bool isBuy = sender == pairAddress && !isExempt[recipient];
         bool isSell = recipient == pairAddress && !isExempt[sender];
 
+        // Diamond Floor check
         if (diamondFloor.enabled && isSell) {
             require(!diamondFloor.sellStopped, "Sells stopped by Diamond Floor");
             _checkPriceConditions();
         }
 
+        // Cooldown check
         if (cooldown.enabled && isSell) {
             require(block.timestamp >= cooldown.cooldowns[sender], "Cooldown active");
             cooldown.cooldowns[sender] = block.timestamp + cooldown.duration;
@@ -116,17 +120,24 @@ contract MemeCoin is ERC20, Ownable {
         uint256 taxAmount = _calculateTax(sender, recipient, amount);
         uint256 netAmount = amount.sub(taxAmount);
 
+        // Max wallet check
         if (!isExempt[recipient] && !isSell) {
-            require(balanceOf(recipient).add(netAmount) <= _maxWalletSize(), "Max wallet exceeded");
+            require(
+                balanceOf(recipient).add(netAmount) <= _maxWalletSize(),
+                "Max wallet exceeded"
+            );
         }
 
+        // Process taxes
         if (taxAmount > 0) {
             super._transfer(sender, address(this), taxAmount);
             _distributeTax(taxAmount, isBuy, isSell);
         }
 
+        // Execute transfer
         super._transfer(sender, recipient, netAmount);
 
+        // Auto LP addition
         if (_shouldSwapBack()) {
             _swapAndLiquify();
         }
@@ -144,49 +155,53 @@ contract MemeCoin is ERC20, Ownable {
 
         if (isBuy) {
             return amount.mul(uint256(taxRates.buyLp).add(taxRates.buyEco)).div(BP_DIVISOR);
-        } else if (isSell) {
+        } 
+        if (isSell) {
             return amount.mul(uint256(taxRates.sellLp).add(taxRates.sellEco)).div(BP_DIVISOR);
-        } else {
-            uint256 sellTotal = uint256(taxRates.sellLp).add(taxRates.sellEco);
-            uint256 transferTax = sellTotal.mul(transferMultiplier).div(10);
-            return amount.mul(transferTax).div(BP_DIVISOR);
         }
+        
+        uint256 sellTotal = uint256(taxRates.sellLp).add(taxRates.sellEco);
+        uint256 transferTax = sellTotal.mul(TRANSFER_MULTIPLIER).div(10);
+        return amount.mul(transferTax).div(BP_DIVISOR);
     }
-
 
     function _distributeTax(uint256 taxAmount, bool isBuy, bool isSell) private {
         uint256 lpShare;
         uint256 ecoShare;
 
         if (isBuy) {
-            lpShare = taxAmount.mul(taxRates.buyLp).div(taxRates.buyLp + taxRates.buyEco);
+            uint256 total = uint256(taxRates.buyLp).add(taxRates.buyEco);
+            require(total > 0, "Buy tax not set");
+            lpShare = taxAmount.mul(taxRates.buyLp).div(total);
         } else if (isSell) {
-            lpShare = taxAmount.mul(taxRates.sellLp).div(taxRates.sellLp + taxRates.sellEco);
+            uint256 total = uint256(taxRates.sellLp).add(taxRates.sellEco);
+            require(total > 0, "Sell tax not set");
+            lpShare = taxAmount.mul(taxRates.sellLp).div(total);
         } else {
-            uint256 sellTotal = taxRates.sellLp + taxRates.sellEco;
-            lpShare = taxAmount.mul(taxRates.sellLp).div(sellTotal).mul(transferMultiplier).div(10);
+            uint256 total = uint256(taxRates.sellLp).add(taxRates.sellEco);
+            require(total > 0, "Transfer tax not set");
+            lpShare = taxAmount.mul(taxRates.sellLp).div(total).mul(TRANSFER_MULTIPLIER).div(10);
         }
 
-        ecoShare = taxAmount - lpShare;
-        accumulatedLp += lpShare;
-        accumulatedEco += ecoShare;
+        ecoShare = taxAmount.sub(lpShare);
+        accumulatedLp = accumulatedLp.add(lpShare);
+        accumulatedEco = accumulatedEco.add(ecoShare);
 
         emit TaxesCollected(lpShare, ecoShare);
     }
 
     function _checkPriceConditions() private {
         uint256 currentPrice = pairPrice();
+        if (currentPrice == 0) return;
 
         if (currentPrice > diamondFloor.athPrice) {
             diamondFloor.athPrice = currentPrice;
-            if (diamondFloor.sellStopped) {
-                diamondFloor.sellStopped = false;
-            }
+            diamondFloor.sellStopped = false;
             return;
         }
 
         uint256 thresholdPrice = diamondFloor.athPrice
-            .mul(BP_DIVISOR - diamondFloor.triggerPercentage)
+            .mul(BP_DIVISOR.sub(diamondFloor.triggerPercentage))
             .div(BP_DIVISOR);
 
         if (currentPrice < thresholdPrice) {
@@ -201,16 +216,18 @@ contract MemeCoin is ERC20, Ownable {
     }
 
     function _swapAndLiquify() private {
-        uint256 totalTokens = accumulatedLp + accumulatedEco;
+        uint256 totalTokens = accumulatedLp.add(accumulatedEco);
         if (totalTokens < swapThreshold) return;
 
         swapping = true;
         uint256 initialBalance = address(this).balance;
 
+        // Process ecosystem tax
         _swapTokensForETH(accumulatedEco);
         uint256 ecoETH = address(this).balance.sub(initialBalance);
         payable(owner()).transfer(ecoETH);
 
+        // Process LP tax
         uint256 lpTokens = accumulatedLp;
         uint256 half = lpTokens.div(2);
         _swapTokensForETH(half);
@@ -225,9 +242,11 @@ contract MemeCoin is ERC20, Ownable {
 
     function pairPrice() public view returns (uint256) {
         (uint112 reserve0, uint112 reserve1,) = IUniswapV2Pair(pairAddress).getReserves();
+        if (reserve0 == 0 || reserve1 == 0) return 0;
+        
         return IUniswapV2Pair(pairAddress).token0() == address(this) ?
-            (uint256(reserve1).mul(1e18)).div(uint256(reserve0)) :
-            (uint256(reserve0).mul(1e18)).div(uint256(reserve1));
+            uint256(reserve1).mul(1e18).div(uint256(reserve0)) :
+            uint256(reserve0).mul(1e18).div(uint256(reserve1));
     }
 
     function cooldownRemaining(address account) public view returns (
@@ -262,8 +281,8 @@ contract MemeCoin is ERC20, Ownable {
     }
 
     function setTaxRates(uint16 buyLp, uint16 buyEco, uint16 sellLp, uint16 sellEco) external onlyOwner {
-        require(buyLp + buyEco <= 2500, "Buy tax too high");
-        require(sellLp + sellEco <= 2500, "Sell tax too high");
+        require(buyLp + buyEco <= 2500, "Max 25% buy tax");
+        require(sellLp + sellEco <= 2500, "Max 25% sell tax");
         taxRates = TaxRates(buyLp, buyEco, sellLp, sellEco);
     }
 
@@ -277,6 +296,7 @@ contract MemeCoin is ERC20, Ownable {
     }
 
     function configureDiamondFloor(bool enabled, uint16 triggerPercent) external onlyOwner {
+        require(triggerPercent <= BP_DIVISOR, "Invalid percentage");
         diamondFloor.enabled = enabled;
         diamondFloor.triggerPercentage = triggerPercent;
     }
@@ -326,6 +346,12 @@ contract MemeCoin is ERC20, Ownable {
         return !swapping &&
             accumulatedLp.add(accumulatedEco) >= swapThreshold &&
             msg.sender != pairAddress;
+    }
+
+    function setMaxWalletPercentage(uint256 percentage) external onlyOwner {
+        require(percentage >= 100, "Max 1% wallet limit");
+        maxWalletPercentage = percentage;
+        emit MaxWalletUpdated(percentage);
     }
 
     receive() external payable {}
