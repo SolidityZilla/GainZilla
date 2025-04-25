@@ -201,11 +201,11 @@
 			]
 		},
 		"contracts/gainzilla.sol": {
-			"keccak256": "0x1f5fe749bdbccea1babd51e6cf600c090ac0bddf2fe5bc5d072516f34ebd0bec",
+			"keccak256": "0xf8a8c754060564d542824e3b2799fd950da59ca4a80f4ccdb121225364dcc693",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://12add13c868c489ca04075c9d83a6f648ffc218181a929d7617b1f48f7698fea",
-				"dweb:/ipfs/QmPE8hhAQDXwFTGxfrnvnXCFaojEupH6Cf3tKwHpAJDs5Y"
+				"bzz-raw://84e26de5bc327e10e877826731cbc40bce0bbd57bb22c4b919bc49ff54736f54",
+				"dweb:/ipfs/QmRMmnzG5Pi9aXc6P9U1jwccHoSf4qa5Wz9eG4caMugb2s"
 			]
 		}
 	},

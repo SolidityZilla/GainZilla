@@ -3,7 +3,7 @@
 ## Context
 
 ### Contract
-Context : contracts/gainzilla.sol
+Context : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -16,7 +16,7 @@ function _msgSender() internal view virtual returns (address)
 ## IERC20
 
 ### Contract
-IERC20 : contracts/gainzilla.sol
+IERC20 : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -73,7 +73,7 @@ event Approval(address owner, address spender, uint256 value)
 ## SafeMath
 
 ### Contract
-SafeMath : contracts/gainzilla.sol
+SafeMath : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -116,7 +116,7 @@ function div(uint256 a, uint256 b, string errorMessage) internal pure returns (u
 ## Ownable
 
 ### Contract
-Ownable : contracts/gainzilla.sol
+Ownable : contracts/reference.sol
 
  --- 
 ### Modifiers:
@@ -175,7 +175,7 @@ event OwnershipTransferred(address previousOwner, address newOwner)
 ## IUniswapV2Pair
 
 ### Contract
-IUniswapV2Pair : contracts/gainzilla.sol
+IUniswapV2Pair : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -382,7 +382,7 @@ event Sync(uint112 reserve0, uint112 reserve1)
 ## IUniswapV2Factory
 
 ### Contract
-IUniswapV2Factory : contracts/gainzilla.sol
+IUniswapV2Factory : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -395,7 +395,7 @@ function createPair(address tokenA, address tokenB) external returns (address pa
 ## IUniswapV2Router02
 
 ### Contract
-IUniswapV2Router02 : contracts/gainzilla.sol
+IUniswapV2Router02 : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -462,7 +462,7 @@ function getAmountsIn(uint256 amountOut, address[] path) external view returns (
 ## IERC20Extented
 
 ### Contract
-IERC20Extented : contracts/gainzilla.sol
+IERC20Extented : contracts/reference.sol
 
  --- 
 ### Functions:
@@ -539,7 +539,7 @@ event Approval(address owner, address spender, uint256 value)
 ## gainZilla
 
 ### Contract
-gainZilla : contracts/gainzilla.sol
+gainZilla : contracts/reference.sol
 
  --- 
 ### Modifiers:
@@ -771,12 +771,6 @@ function configureStrongHands(bool enabled, uint32 duration) external
 
 ```solidity
 function cooldownRemaining(address account) public view returns (uint256 days_, uint256 hours_, uint256 minutes_, uint256 seconds_)
-```
-
-### ATHvariance
-
-```solidity
-function ATHvariance() public view returns (int256)
 ```
 
 inherits Ownable:

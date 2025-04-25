@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.25+commit.b61c2a91"
+		"version": "0.8.4+commit.c7e474f2"
 	},
 	"language": "Solidity",
 	"output": {
@@ -41,17 +41,29 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "tokenAmount",
+						"name": "_buyMarketingFee",
 						"type": "uint256"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "ethAmount",
+						"name": "_buyLiquidityFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_buyTeamFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_buyEcosystemFee",
 						"type": "uint256"
 					}
 				],
-				"name": "LiquidityAdded",
+				"name": "BuyFeesUpdated",
 				"type": "event"
 			},
 			{
@@ -60,11 +72,11 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "newPercentage",
+						"name": "_maxTxAmount",
 						"type": "uint256"
 					}
 				],
-				"name": "MaxWalletUpdated",
+				"name": "MaxTxAmountUpdated",
 				"type": "event"
 			},
 			{
@@ -91,31 +103,30 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "address",
-						"name": "newRouter",
-						"type": "address"
-					}
-				],
-				"name": "RouterUpdated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
 						"internalType": "uint256",
-						"name": "lpAmount",
+						"name": "_sellMarketingFee",
 						"type": "uint256"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "ecoAmount",
+						"name": "_sellLiquidityFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_sellTeamFee",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_sellEcosystemFee",
 						"type": "uint256"
 					}
 				],
-				"name": "TaxesCollected",
+				"name": "SellFeesUpdated",
 				"type": "event"
 			},
 			{
@@ -145,7 +156,20 @@
 			},
 			{
 				"inputs": [],
-				"name": "_maxWalletSize",
+				"name": "ATHvariance",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_buyEcosystemFee",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -158,7 +182,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "accumulatedEco",
+				"name": "_buyLiquidityFee",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -171,7 +195,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "accumulatedLp",
+				"name": "_buyMarketingFee",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -180,6 +204,97 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_buyTeamFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_maxWalletAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_sellEcosystemFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_sellLiquidityFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_sellMarketingFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_sellTeamFee",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "addBot",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -250,6 +365,45 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "canBlackList",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "canChangeTax",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "canPause",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "bool",
@@ -262,25 +416,7 @@
 						"type": "uint32"
 					}
 				],
-				"name": "configureCooldown",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bool",
-						"name": "enabled",
-						"type": "bool"
-					},
-					{
-						"internalType": "uint16",
-						"name": "triggerPercent",
-						"type": "uint16"
-					}
-				],
-				"name": "configureDiamondFloor",
+				"name": "configureStrongHands",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -347,31 +483,7 @@
 						"type": "uint8"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "subtractedValue",
-						"type": "uint256"
-					}
-				],
-				"name": "decreaseAllowance",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
@@ -408,26 +520,37 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "addedValue",
-						"type": "uint256"
-					}
-				],
-				"name": "increaseAllowance",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
+				"inputs": [],
+				"name": "disableBlackListing",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "disablePauseAbility",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "disableTaxChange",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "disableToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "enableToken",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -435,11 +558,37 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "account",
 						"type": "address"
 					}
 				],
-				"name": "isExempt",
+				"name": "excludeFromFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "includeInFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "isBot",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -451,16 +600,30 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "maxWalletPercentage",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
 					}
 				],
-				"stateMutability": "view",
+				"name": "manualSendToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "manualsend",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "manualswap",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -473,25 +636,38 @@
 						"type": "string"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "owner",
+				"name": "numTokensToSwap",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "botBlocks",
+						"type": "uint256"
+					}
+				],
+				"name": "openTrading",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "pairAddress",
+				"name": "owner",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -516,16 +692,16 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "priceDeviation",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "int256",
-						"name": "",
-						"type": "int256"
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
 					}
 				],
-				"stateMutability": "view",
+				"name": "removeBot",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -536,32 +712,29 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "routerAddress",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "marketingFee",
+						"type": "uint256"
 					},
 					{
-						"internalType": "bool",
-						"name": "exempt",
-						"type": "bool"
+						"internalType": "uint256",
+						"name": "liquidityFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "teamFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ecosystemFee",
+						"type": "uint256"
 					}
 				],
-				"name": "setExempt",
+				"name": "setBuyTaxes",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -570,52 +743,11 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "percentage",
+						"name": "maxWalletAmount",
 						"type": "uint256"
 					}
 				],
-				"name": "setMaxWalletPercentage",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "newRouter",
-						"type": "address"
-					}
-				],
-				"name": "setRouter",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint16",
-						"name": "buyLp",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint16",
-						"name": "buyEco",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint16",
-						"name": "sellLp",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint16",
-						"name": "sellEco",
-						"type": "uint16"
-					}
-				],
-				"name": "setTaxRates",
+				"name": "setMaxWalletAmount",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -624,26 +756,41 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "threshold",
+						"name": "marketingFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidityFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "teamFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ecosystemFee",
 						"type": "uint256"
 					}
 				],
-				"name": "setThreshold",
+				"name": "setSellTaxes",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "swapThreshold",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "_multiplier",
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "setTransferTransactionMultiplier",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -656,35 +803,7 @@
 						"type": "string"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "taxRates",
-				"outputs": [
-					{
-						"internalType": "uint16",
-						"name": "buyLp",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint16",
-						"name": "buyEco",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint16",
-						"name": "sellLp",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint16",
-						"name": "sellEco",
-						"type": "uint16"
-					}
-				],
-				"stateMutability": "view",
+				"stateMutability": "pure",
 				"type": "function"
 			},
 			{
@@ -697,6 +816,19 @@
 						"type": "uint256"
 					}
 				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tradingOpen",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "view",
 				"type": "function"
 			},
@@ -704,7 +836,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "recipient",
 						"type": "address"
 					},
 					{
@@ -725,15 +857,28 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "transferFeeIncreaseFactor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "from",
+						"name": "sender",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "recipient",
 						"type": "address"
 					},
 					{
@@ -767,60 +912,91 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "uniswapV2Pair",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "ecosystemAddress",
+						"type": "address"
+					}
+				],
+				"name": "updateEcosystemAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "lpRecipient",
+						"type": "address"
+					}
+				],
+				"name": "updateLpRecipient",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "marketingAddress",
+						"type": "address"
+					}
+				],
+				"name": "updateMarketingAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "numTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "updateNumTokensToSwap",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "teamAddress",
+						"type": "address"
+					}
+				],
+				"name": "updateTeamAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"stateMutability": "payable",
 				"type": "receive"
 			}
 		],
 		"devdoc": {
-			"events": {
-				"Approval(address,address,uint256)": {
-					"details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
-				},
-				"Transfer(address,address,uint256)": {
-					"details": "Emitted when `value` tokens are moved from one account (`from`) to another (`to`). Note that `value` may be zero."
-				}
-			},
 			"kind": "dev",
 			"methods": {
-				"allowance(address,address)": {
-					"details": "See {IERC20-allowance}."
-				},
-				"approve(address,uint256)": {
-					"details": "See {IERC20-approve}. NOTE: If `amount` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
-				},
-				"balanceOf(address)": {
-					"details": "See {IERC20-balanceOf}."
-				},
-				"decimals()": {
-					"details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
-				},
-				"decreaseAllowance(address,uint256)": {
-					"details": "Atomically decreases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {IERC20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address. - `spender` must have allowance for the caller of at least `subtractedValue`."
-				},
-				"increaseAllowance(address,uint256)": {
-					"details": "Atomically increases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {IERC20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address."
-				},
-				"name()": {
-					"details": "Returns the name of the token."
-				},
-				"owner()": {
-					"details": "Returns the address of the current owner."
-				},
-				"renounceOwnership()": {
-					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
-				},
-				"symbol()": {
-					"details": "Returns the symbol of the token, usually a shorter version of the name."
-				},
-				"totalSupply()": {
-					"details": "See {IERC20-totalSupply}."
-				},
-				"transfer(address,uint256)": {
-					"details": "See {IERC20-transfer}. Requirements: - `to` cannot be the zero address. - the caller must have a balance of at least `amount`."
-				},
-				"transferFrom(address,address,uint256)": {
-					"details": "See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `amount`. - the caller must have allowance for ``from``'s tokens of at least `amount`."
-				},
 				"transferOwnership(address)": {
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				}
@@ -835,74 +1011,26 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/gainzilla.sol": "MemeCoin"
+			"contracts/gainzilla.sol": "gainZilla"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "istanbul",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 200
+			"runs": 10000
 		},
 		"remappings": []
 	},
 	"sources": {
-		"@openzeppelin/contracts/utils/math/SafeMath.sol": {
-			"keccak256": "0x58b21219689909c4f8339af00813760337f7e2e7f169a97fe49e2896dcfb3b9a",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://ef8e012e946dec20e59f2d4446f4b44bb098f3fa8bac103b1b5112fff777447b",
-				"dweb:/ipfs/QmVTooKWcLkJ9W68yNX4MgdrbAKiAXwuRN9A7f4NkdcdtQ"
-			]
-		},
-		"@openzeppelin/contracts@4.9.3/access/Ownable.sol": {
-			"keccak256": "0xba43b97fba0d32eb4254f6a5a297b39a19a247082a02d6e69349e071e2946218",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://fc980984badf3984b6303b377711220e067722bbd6a135b24669ff5069ef9f32",
-				"dweb:/ipfs/QmPHXMSXj99XjSVM21YsY6aNtLLjLVXDbyN76J5HQYvvrz"
-			]
-		},
-		"@openzeppelin/contracts@4.9.3/token/ERC20/ERC20.sol": {
-			"keccak256": "0xa56ca923f70c1748830700250b19c61b70db9a683516dc5e216694a50445d99c",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://cac938788bc4be12101e59d45588b4e059579f4e61062e1cda8d6b06c0191b15",
-				"dweb:/ipfs/QmV2JKCyjTVH3rkWNrfdJRhAT7tZ3usAN2XcnD4h53Mvih"
-			]
-		},
-		"@openzeppelin/contracts@4.9.3/token/ERC20/IERC20.sol": {
-			"keccak256": "0x287b55befed2961a7eabd7d7b1b2839cbca8a5b80ef8dcbb25ed3d4c2002c305",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://bd39944e8fc06be6dbe2dd1d8449b5336e23c6a7ba3e8e9ae5ae0f37f35283f5",
-				"dweb:/ipfs/QmPV3FGYjVwvKSgAXKUN3r9T9GwniZz83CxBpM7vyj2G53"
-			]
-		},
-		"@openzeppelin/contracts@4.9.3/token/ERC20/extensions/IERC20Metadata.sol": {
-			"keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://5a376d3dda2cb70536c0a45c208b29b34ac560c4cb4f513a42079f96ba47d2dd",
-				"dweb:/ipfs/QmZQg6gn1sUpM8wHzwNvSnihumUCAhxD119MpXeKp8B9s8"
-			]
-		},
-		"@openzeppelin/contracts@4.9.3/utils/Context.sol": {
-			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
-				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
-			]
-		},
 		"contracts/gainzilla.sol": {
-			"keccak256": "0xf8a8c754060564d542824e3b2799fd950da59ca4a80f4ccdb121225364dcc693",
+			"keccak256": "0x4af3813bc629daf871e64a58e0d92d39eca9f85fde0ad0d2955616d20015346d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://84e26de5bc327e10e877826731cbc40bce0bbd57bb22c4b919bc49ff54736f54",
-				"dweb:/ipfs/QmRMmnzG5Pi9aXc6P9U1jwccHoSf4qa5Wz9eG4caMugb2s"
+				"bzz-raw://a20cca7f093d482ce096c66efd1e88c77f58c1928b22ba07b561f8813bccc101",
+				"dweb:/ipfs/QmSeMMGCKjnwUZnwZMqwTCeYrhTcp1WxvgL5Bb9rwDNhe2"
 			]
 		}
 	},

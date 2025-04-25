@@ -6,33 +6,70 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": true,
 						"internalType": "address",
-						"name": "tokenA",
+						"name": "previousOwner",
 						"type": "address"
 					},
 					{
+						"indexed": true,
 						"internalType": "address",
-						"name": "tokenB",
+						"name": "newOwner",
 						"type": "address"
 					}
 				],
-				"name": "createPair",
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
 				"outputs": [
 					{
 						"internalType": "address",
-						"name": "pair",
+						"name": "",
 						"type": "address"
 					}
 				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -43,7 +80,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/gainzilla.sol": "IUniswapV2Factory"
+			"contracts/gainzilla.sol": "Ownable"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
