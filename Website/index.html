@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GainZilla - Next Generation Meme Coin with Revolutionary Tokenomics</title>
+  <meta name="description" content="Join the GainZilla revolution - A community-driven meme coin with unique HODL mechanics, dynamic tokenomics, and massive growth potential on Binance Smart Chain.">
+  
+  <!-- Essential SEO Meta Tags -->
+  <meta name="keywords" content="GainZilla, meme coin, cryptocurrency, BSC, Binance Smart Chain, DeFi, tokenomics, crypto investment, blockchain">
+  <meta name="author" content="GainZilla Team">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://gainzilla.site/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gainzilla.site/">
+  <meta property="og:title" content="GainZilla - Community-Powered Meme Coin Ecosystem">
+  <meta property="og:description" content="Experience the future of meme coins with GainZilla's innovative HODL mechanics and community-focused platform on BSC.">
+  <meta property="og:image" content="https://gainzilla.site/assets/social-preview.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://gainzilla.site/">
+  <meta property="twitter:title" content="GainZilla - Next Gen Meme Coin on BSC">
+  <meta property="twitter:description" content="Join the GainZilla revolution with dynamic tokenomics and community-driven growth strategies.">
+  <meta property="twitter:image" content="https://gainzilla.site/assets/twitter-preview.jpg">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#ff822e">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#87cefa">
+
+  <!-- Preload Important Assets -->
+  <link rel="preload" href="assets/logo.png" as="image">
+  <link rel="preload" href="assets/gainzilla-hero.png" as="image">
+
+  <!-- Social Connections -->
+  <meta name="twitter:site" content="@GainzillaBsc">
+  <link rel="me" href="https://x.com/GainzillaBsc">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <style>
+    /* ===== Base Styles ===== */
+    :root {
+      --bg-color: #081754;
+      --primary-color: #FF822E;
+      --card-bg: #FBECD0;
+      --card-hover: #F9E2B7;
+      --text-light: #2E2760;
+      --hero-title: #FDF2DD;
+    }
+
+    * {
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-color);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== IntroVideo ===== */
+    .intro-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.9);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .video-container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+    }
+
+        video {
+        width: 100%;
+        height: auto;
+        max-height: 90vh;
+        border-radius: 10px;
+        outline: none;
+    }
+    /* Add mute button styling */
+    .mute-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    transition: all 0.3s ease;
+    }
+
+    .mute-btn:hover {
+    background: rgba(0,0,0,0.8);
+    transform: scale(1.1);
+    }
+
+    .mute-btn.unmuted {
+    background: var(--primary-color);
+    }
+
+    /* ===== Cursor ===== */
+    .cursor {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--primary-color);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      z-index: 9999;
+      transition: all 0.3s ease;
+    }
+
+    .cursor.active {
+      width: 50px;
+      height: 50px;
+      background: rgba(255,130,46,0.2);
+    }
+
+    /* ===== Header ===== */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 1rem 2rem;
+        background: transparent;
+        backdrop-filter: blur(8px);
+        border-bottom: 2px solid #3D1E7B;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        }
+
+        .header-play-btn {
+        background: var(--primary-color);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        margin-left: 1rem;
+        }
+
+        .header-play-btn svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+        }
+
+        .header-play-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(255,130,46,0.4);
+        }
+
+        /* Ensure header layout */
+        header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+
+
+    /* ===== Hero Section ===== */
+    .hero-section {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      z-index: 3;
+      overflow: hidden;
+    }
+
+    .hero-image-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-img {
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease-out;
+    }
+
+    .wordmark {
+      position: absolute;
+      bottom: 1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      max-width: 90%;
+      z-index: 3;
+      pointer-events: none;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-text .cta-button  {
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-text .cta-button ::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .hero-text .cta-button :hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(255,130,46,0.4);
+    }
+
+    .hero-text .cta-button :hover::before {
+      left: 100%;
+    }
+
+    .cta-button {
+  text-decoration: none;
+  display: inline-block;
+
+}
+
+    /* ===== Cards Section ===== */
+    .cards-section {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 3rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-wrapper {
+      perspective: 1000px;
+      width: 280px;
+      height: 300px;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .card-front {
+      background: var(--card-bg);
+    }
+
+    .card-back {
+      background: var(--primary-color);
+      transform: rotateY(180deg);
+    }
+
+    .card img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .card h3 {
+      color: var(--text-light);
+      transition: transform 0.3s ease;
+    }
+
+    .card-back h3,
+    .card-back p {
+      color: white !important;
+      text-align: center;
+    }
+
+    /* ===== Modals ===== */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay[style*="display: flex"] {
+      opacity: 1;
+    }
+
+    .modal {
+      background: var(--card-bg);
+      color: var(--text-light);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: min(90%, 600px);
+      width: auto;
+      margin: 0 1rem;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-height: 90%;
+      overflow: auto;
+      position: relative;
+      transform: scale(0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .modal svg {
+      display: block;
+      margin: 0 auto 1rem;
+    }
+
+    .overlay[style*="display: flex"] .modal {
+      transform: scale(1);
+    }
+
+    .close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .close:hover {
+      transform: rotate(90deg) scale(1.1);
+    }
+
+    /* ===== Particles ===== */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none !important; /* Changed from auto */
+      background: transparent;
+    }
+
+    /* body > *:not(#particles-js):not(.intro-modal) {
+        pointer-events: none;
+    }
+
+    body > header,
+    body > main,
+    body > footer {
+      pointer-events: auto;
+    }
+
+    section:not(.cards-section), 
+    .hero-section,
+    footer {
+      pointer-events: none;
+    } */
+
+    body > *:not(.intro-modal) {
+    pointer-events: none;
+}
+
+    a, button, .card-wrapper,
+.modal, .close, iframe,
+[onclick], footer, footer * {
+  pointer-events: auto !important;
+}
+
+    /* ===== ChartSection ===== */
+    #chart-section {
+      padding: 3rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .chart-container {
+      max-width: 100vw;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    #dexscreener-embed {
+      width: 100%;
+      position: relative;
+    }
+
+    #dexscreener-embed iframe {
+      width: 100%;
+      height: 50rem;
+      border: none;
+    }
+
+  /* ===== Footer ===== */
+    footer {
+      background: transparent;
+      backdrop-filter: blur(8px); /* Match header's blur */
+      padding: 2rem 1rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 100; /* Match header's z-index */
+      border-top: 2px solid #3D1E7B; /* Add border like header */
+      pointer-events: auto !important;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .social-links svg {
+      fill: var(--primary-color);
+      transition: transform 0.3s ease;
+      width: 40px; /* Fixed size */
+      height: 40px; /* Fixed size */
+    }
+
+    .copyright {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      opacity: 0.8;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== Responsive Styles ===== */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 1.4rem;
+      }
+
+      .logo img {
+        height: 30px;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .cards-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card-wrapper {
+        width: 90%;
+      }
+
+      #dexscreener-embed iframe {
+        pointer-events: auto !important;
+        touch-action: pan-x pan-y;
+    }
+    }
+
+    @media (max-width: 480px) {
+      .modal {
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .modal h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .modal svg {
+        width: 40px;
+        height: 40px;
+      }
+
+      .dexscreener-iframe {
+        height: 300px;
+      }
+    }
+
+    /* ===== Utilities ===== */
+    [data-scroll] {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-scroll].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+    <div id="introModal" class="intro-modal">
+        <div class="video-container">
+          <video id="introVideo" width="100%" autoplay playsinline>
+            <source src="assets/intro-video.mp4" type="video/mp4">
+          </video>
+          <button id="muteToggle" class="mute-btn">🔇</button>
+        </div>
+      </div>      
+  <div class="cursor"></div>
+  <div id="particles-js"></div>
+
+  <div id="content">
+    <header>
+      <div class="logo">
+        <img src="assets/logo.png" alt="GainZilla Logo">
+        <span>GainZilla</span>
+      </div>
+      <button id="headerPlayBtn" class="header-play-btn">
+        <svg width="40" height="40" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M8 5v14l11-7z"/>
+        </svg>
+      </button>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section" data-scroll>
+        <div class="hero-image-container">
+          <img src="assets/gainzilla-hero.png" alt="GainZilla Character" class="hero-img">
+          <img src="assets/gainzilla1.png" alt="GainZilla Wordmark" class="wordmark">
+        </div>
+        <div class="hero-text">
+          <a href="https://pancakeswap.finance/swap?outputCurrency=0x54613a779F50BA728A3241B64126AF1D95675Dbb&inputCurrency=BNB" 
+          class="cta-button" 
+          target="_blank" 
+          rel="noopener noreferrer">
+         BUY NOW
+       </a>
+        </div>
+      </section>
+
+      <!-- Cards Section -->
+      <section class="cards-section" data-scroll>
+        <div class="card-wrapper" onclick="expandCard('mission-card')" ontouchend="expandCard('mission-card')">
+          <div class="card">
+            <div class="card-front">
+              <img src="assets/icon-mission.png" alt="Mission Icon">
+              <h3>Our Mission</h3>
+            </div>
+            <div class="card-back">
+              <h3>Our Mission</h3>
+              <p>Unleash the power of the HODL community</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-wrapper" onclick="expandCard('tokenomics-card')" ontouchend="expandCard('tokenomics-card')">
+          <div class="card">
+            <div class="card-front">
+              <img src="assets/icon-tokenomics.png" alt="Tokenomics Icon">
+              <h3>Tokenomics</h3>
+            </div>
+            <div class="card-back">
+              <h3>Tokenomics</h3>
+              <p>Designed for growth and stability</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-wrapper" onclick="expandCard('roadmap-card')" ontouchend="expandCard('roadmap-card')">
+          <div class="card">
+            <div class="card-front">
+              <img src="assets/icon-roadmap.png" alt="Roadmap Icon">
+              <h3>Roadmap</h3>
+            </div>
+            <div class="card-back">
+              <h3>Roadmap</h3>
+              <p>Journey to global domination</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modals -->
+      <div class="overlay" id="mission-card">
+        <div class="modal" tabindex="0" role="dialog" aria-labelledby="missionTitle">
+          <span class="close" onclick="closeCard('mission-card')" aria-label="Close">&times;</span>
+          <h2 id="missionTitle">Our Mission</h2>
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="#2E2760" stroke-width="2" />
+            <path d="M8 12l2 2 4-4" stroke="#2E2760" stroke-width="2" fill="none" />
+          </svg>
+          <p>GainZilla's mission is to unleash the power of HODLING, be it by force or be it by will. We are building a future 
+            where every holder feels the strength of the collective and the rewards of patience. </p>
+        </div>
+      </div>
+      
+      <div class="overlay" id="tokenomics-card">
+        <div class="modal" tabindex="0" role="dialog" aria-labelledby="tokenomicsTitle">
+          <span class="close" onclick="closeCard('tokenomics-card')" aria-label="Close">&times;</span>
+          <h2 id="tokenomicsTitle">Tokenomics</h2>
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" stroke="#2E2760" stroke-width="2" />
+            <path d="M4 14h16" stroke="#2E2760" stroke-width="2" />
+          </svg>
+          <p>
+            Custom contract that cools you down from selling after you make your first sell. 
+            Total Supply: 1,000,000,000 <br>
+            Tax: Variable based on dev can go as high as 25% <br>
+            Max Wallet: Ranges between (0.1% to 2% with growth and need)<br>
+            Designed for growth, stability, and moon potential. <br>
+            Thats BullShit Crap !! This has no value dont buy it !! <br>
+            If you do buy please dont cry on loosing everything!
+          </p>
+        </div>
+      </div>
+      
+      <div class="overlay" id="roadmap-card">
+        <div class="modal" tabindex="0" role="dialog" aria-labelledby="roadmapTitle">
+          <span class="close" onclick="closeCard('roadmap-card')" aria-label="Close">&times;</span>
+          <h2 id="roadmapTitle">Roadmap</h2>
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="#2E2760" stroke-width="2" />
+          </svg>
+          <p>
+            <strong>Phase 1:</strong> This is just a meme coin with no value<br>
+            <strong>Phase 2:</strong> Dont buy it! You will lose it all <br>
+            <strong>Phase 3:</strong> Still a meme coin.<br>
+            <strong>Phase 4:</strong> We are only about the Gainz 🌍 <br>
+            <strong>Phase 4:</strong> Repeat Phase 1 to 4  
+          </p>
+        </div>
+      </div>
+
+      <!-- Chart Section -->
+      <section id="chart-section" data-scroll>
+        <div class="chart-container">
+          <div id="dexscreener-embed">
+            <iframe src="https://dexscreener.com/bsc/0x500227fe94acd60ebf74f49eb0371ad9ac65d2ea?embed=1&theme=dark"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+          <!-- Twitter/X -->
+          <a href="https://x.com/GainzillaBsc" target="_blank" rel="noopener noreferrer" aria-label="Visit our Twitter">
+            <svg width="45" height="45" viewBox="0 0 24 24">
+              <path d="M22.54 2h-2.59l-6.22 7.06L7.07 2H2L9.95 12 2 22h2.59l6.67-7.58L16.93 22H22L13.89 12 22.54 2z"/>
+            </svg>
+          </a>
+      
+          <!-- Telegram -->
+          <a href="https://t.me/Gainzilla_Entry" target="_blank" rel="noopener noreferrer" aria-label="Join our Telegram">
+            <svg width="45" height="45" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 7.5l-1.59 7.53c-.12.53-.43.66-.87.41l-2.4-1.77-1.15 1.11c-.13.13-.25.25-.51.25l.18-2.54 4.63-4.19c.2-.18-.05-.29-.31-.1l-5.72 3.59-2.47-.77c-.54-.17-.55-.54.11-.8l9.65-3.73c.45-.17.84.1.7.79z"/>
+            </svg>
+          </a>
+      
+          <!-- Google Form -->
+          <a href="https://t.co/MwpMFnaKHh" target="_blank" rel="noopener noreferrer" aria-label="ChatGPT Thread">
+            <svg width="45" height="45" viewBox="0 0 24 24">
+              <path d="M17 2H7C5.9 2 5 2.9 5 4v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H7V4h10v16zM8 6h8v2H8V6zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/>
+            </svg>
+          </a>
+        </div>
+      
+        <p class="copyright">
+          © 2025 GainZilla. All rights reserved.
+        </p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const introModal = document.getElementById('introModal');
+        const introVideo = document.getElementById('introVideo');
+        const muteToggle = document.getElementById('muteToggle');
+        const headerPlayBtn = document.getElementById('headerPlayBtn');
+
+        // Header play button visibility functions
+        const showHeaderButton = () => {
+            headerPlayBtn.style.display = 'flex';
+            headerPlayBtn.style.opacity = '1';
+        };
+
+        const hideHeaderButton = () => {
+            headerPlayBtn.style.opacity = '0';
+            setTimeout(() => {
+                headerPlayBtn.style.display = 'none';
+            }, 300);
+        };
+
+        // Video modal control functions
+        const showVideoModal = () => {
+            introModal.style.display = 'flex';
+            introVideo.currentTime = 0;
+            introVideo.muted = false;
+            muteToggle.textContent = '🔊';
+            hideHeaderButton();
+        };
+
+        const closeVideoModal = () => {
+            introModal.style.display = 'none';
+            showHeaderButton();
+        };
+
+        // Initialize video settings
+        let isMuted = false;
+        introVideo.volume = 0.5;
+        introVideo.muted = true;
+
+        // Header play button click handler
+        headerPlayBtn.addEventListener('click', async () => {
+            showVideoModal();
+            try {
+                await introVideo.play();
+                document.querySelector('.play-button-overlay').style.display = 'none';
+            } catch(error) {
+                console.error('Video play failed:', error);
+            }
+        });
+
+        // Initial video setup
+        function initVideo() {
+            introVideo.play()
+                .then(() => {
+                    hideHeaderButton();
+                })
+                .catch((error) => {
+                    console.log('Autoplay prevented:', error);
+                    showHeaderButton();
+                })
+                .finally(() => {
+                    introVideo.pause();
+                    introVideo.currentTime = 0;
+                });
+        }
+
+        // Mute toggle functionality
+        muteToggle.addEventListener('click', () => {
+            isMuted = !isMuted;
+            introVideo.muted = isMuted;
+            muteToggle.textContent = isMuted ? '🔇' : '🔊';
+            muteToggle.classList.toggle('unmuted', !isMuted);
+        });
+
+        // Video end handler
+        introVideo.addEventListener('ended', closeVideoModal);
+
+
+        // Rest of your existing code below
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        // Particles.js Initialization
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#FF822E" },
+                shape: { type: "circle" },
+                opacity: { value: 0.7, random: true },
+                size: { value: 3, random: true },
+                move: {
+                    enable: true,
+                    speed: 2.5,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 120, duration: 0.6 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Modal Handling
+        let activeModal = null;
+
+        window.expandCard = id => {
+            if(activeModal) closeCard();
+            activeModal = document.getElementById(id);
+            activeModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeCard = () => {
+            if(activeModal) {
+                activeModal.style.display = 'none';
+                document.body.style.overflow = '';
+                activeModal = null;
+            }
+        };
+
+        // Close modal on overlay click
+        document.querySelectorAll('.overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if(e.target === overlay) closeCard();
+            });
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') closeCard();
+        });
+
+        // Scroll Animations
+        const scrollObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('[data-scroll]').forEach(el => {
+            scrollObserver.observe(el);
+        });
+    });
+</script>
+</body>
+</html>

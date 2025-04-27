@@ -1,0 +1,35 @@
+{
+  "name": "GainZilla",
+  "short_name": "GainZilla",
+  "description": "Community-powered meme coin ecosystem with revolutionary tokenomics",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FF822E",
+  "theme_color": "#87CEFA",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/favicon/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon/safari-pinned-tab.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
