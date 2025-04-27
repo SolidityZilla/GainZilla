@@ -212,7 +212,7 @@ abstract contract IERC20Extented is IERC20 {
 contract gainZilla is Context, IERC20, IERC20Extented, Ownable {
     using SafeMath for uint256;
     string private constant _name = "GainZilla";
-    string private constant _symbol = "GAINZILLA";
+    string private constant _symbol = "RAWR";
     uint8 private constant _decimals = 9;
     mapping(address => uint256) private _balances;
 
@@ -301,7 +301,6 @@ contract gainZilla is Context, IERC20, IERC20Extented, Ownable {
         IERC20(uniswapV2Pair).approve(address(uniswapV2Router),type(uint256).max);
 
         _maxTxAmount = _tTotal; // start off transaction limit at 100% of total supply
-        _maxWalletAmount = _tTotal; // 100%
 
         _balances[_msgSender()] = _tTotal;
         _isExcludedFromFee[owner()] = true;
@@ -739,6 +738,20 @@ contract gainZilla is Context, IERC20, IERC20Extented, Ownable {
         remaining %= 3600;
         minutes_ = remaining.div(60);
         seconds_ = remaining % 60;
+    }
+
+    function configureDiamondFloor(bool enabled, uint16 triggerPercentage) external onlyOwner {
+        require(triggerPercentage < 1000, "Trigger percentage must be < 1000 (100%)");
+        diamondFloor.enabled = enabled;
+        diamondFloor.triggerPercentage = triggerPercentage;
+        
+        // Initialize ATH price when enabling
+        if (enabled && diamondFloor.athPrice == 0) {
+            uint256 currentPrice = pairPrice();
+            if (currentPrice > 0) {
+                diamondFloor.athPrice = currentPrice;
+            }
+        }
     }
 
     function ATHvariance() public view returns (int256) {

@@ -773,6 +773,12 @@ function configureStrongHands(bool enabled, uint32 duration) external
 function cooldownRemaining(address account) public view returns (uint256 days_, uint256 hours_, uint256 minutes_, uint256 seconds_)
 ```
 
+### configureDiamondFloor
+
+```solidity
+function configureDiamondFloor(bool enabled, uint16 triggerPercentage) external
+```
+
 ### ATHvariance
 
 ```solidity

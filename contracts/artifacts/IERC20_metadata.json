@@ -217,11 +217,11 @@
 	},
 	"sources": {
 		"contracts/gainzilla.sol": {
-			"keccak256": "0x4af3813bc629daf871e64a58e0d92d39eca9f85fde0ad0d2955616d20015346d",
+			"keccak256": "0x6dc2a28c3aa9b26a9a914f506c69d9b8404f627192d77743f96de93ec1a14dd6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a20cca7f093d482ce096c66efd1e88c77f58c1928b22ba07b561f8813bccc101",
-				"dweb:/ipfs/QmSeMMGCKjnwUZnwZMqwTCeYrhTcp1WxvgL5Bb9rwDNhe2"
+				"bzz-raw://a6fd2cc0b55bc6bb59dd724bd64d67d1457c61a25a49b1016d709a9eb7a3c4ed",
+				"dweb:/ipfs/QmZQuyfmdWTUhejKtFz1ZaNh17qojFRfSwMLbeMANPzfgr"
 			]
 		}
 	},
